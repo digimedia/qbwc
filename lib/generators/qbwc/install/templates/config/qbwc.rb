@@ -6,7 +6,7 @@ QBWC.setup do |config|
   
   config.quickbooks_name = "Quickbooks Web Connector"
   config.quickbooks_description = "Quickbooks Web Connector"
-  
+  config.quickbooks_app_id = "Quickbooks Web Connector"
   config.run_every_minutes = 5
   
   #Path to Company File (blank for open or named path or function etc..)

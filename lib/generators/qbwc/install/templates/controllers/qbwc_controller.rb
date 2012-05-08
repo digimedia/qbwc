@@ -5,7 +5,7 @@ class QbwcController < ApplicationController
     qwc = <<-QWC
     <QBWCXML>
     <AppName>#{QBWC.quickbooks_name} #{Rails.env}</AppName>
-    <AppID></AppID>
+    <AppID>#{QBWC.quickbooks_app_id}</AppID>
     <AppURL>#{quickbooks_url(:protocol => 'https://', :action => 'api')}</AppURL>
     <AppDescription>#{QBWC.quickbooks_description}</AppDescription>
     <AppSupport>#{QBWC.quickbooks_support_site_url}</AppSupport>

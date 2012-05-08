@@ -13,6 +13,8 @@ module QBWC
   @@quickbooks_name = "Quickbooks Web Connector"
   mattr_accessor :quickbooks_description
   @@quickbooks_description = "Quickbooks Web Connector"
+  mattr_accessor :quickbooks_app_id
+  @@quickbooks_app_id = "Quickbooks Web Connector"
   
   
   mattr_accessor :run_every_minutes
