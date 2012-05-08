@@ -1,4 +1,5 @@
 require "qbwc/version"
+require "quickbooks"
 
 module QBWC
   #QBWC login credentials
