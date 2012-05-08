@@ -42,6 +42,8 @@ module QBWC
   mattr_reader :quickbooks_type
   mattr_reader :quickbooks_sync
   mattr_reader :quickbooks_sync_specific_records
+  @@quickbooks_sync = nil
+  @@quickbooks_sync_specific_records = nil
   @@quickbooks_type = :qb
   @@parser = QuickbooksApi::API[quickbooks_type]
   
@@ -62,6 +64,15 @@ class << self
     @@quickbooks_type = qb_type
     @@parser = QuickbooksApi::API[qb_type]
   end
+  
+  def quickbooks_sync=(quickbooks_sync)
+    @@quickbooks_sync = quickbooks_sync
+  end
+  
+  def quickbooks_sync_specific_records=(quickbooks_sync_specific_records)
+    @@quickbooks_sync_specific_records = quickbooks_sync_specific_records
+  end
+  
 
   # Default way to setup Quickbooks Web Connector (QBWC). Run rails generate qbwc:install
   # to create a fresh initializer with all configuration values.
