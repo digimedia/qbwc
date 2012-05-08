@@ -4,7 +4,7 @@ QBWC.setup do |config|
   config.qbwc_username = "foo"
   config.qbwc_password = "bar"
   
-  config.name = "Quickbooks Web Connector"
+  config.quickbooks_name = "Quickbooks Web Connector"
   config.quickbooks_description = "Quickbooks Web Connector"
   
   config.run_every_minutes = 5
