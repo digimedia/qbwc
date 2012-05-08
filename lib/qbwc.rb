@@ -40,8 +40,8 @@ module QBWC
 
   #Quickbooks Type (either :qb or :qbpos)
   mattr_reader :quickbooks_type
-  attr_accessor :quickbooks_sync
-  attr_accessor :quickbooks_sync_specific_records
+  mattr_reader :quickbooks_sync
+  mattr_reader :quickbooks_sync_specific_records
   @@quickbooks_type = :qb
   @@parser = QuickbooksApi::API[quickbooks_type]
   
