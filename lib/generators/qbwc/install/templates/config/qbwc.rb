@@ -25,7 +25,7 @@ QBWC.setup do |config|
   # Do not put all your business logic here.  Place in Models or Another Structure. 
   
   config.quickbooks_sync = Proc.new do
-    parser = Quickbooks::API[QBWC.quickbooks_type]
+    parser = QuickbooksApi::API[QBWC.quickbooks_type]
     requests = []   
     #IE: requests <<  Gdaget.sync_gadgets
     [parser, requests]   
@@ -33,7 +33,7 @@ QBWC.setup do |config|
   
   #Will sync instead of a full sync above
   config.quickbooks_sync_specific_records = Proc.new do
-    parser = Quickbooks::API[QBWC.quickbooks_type]    
+    parser = QuickbooksApi::API[QBWC.quickbooks_type]    
     return [parser, []]    
   end
   

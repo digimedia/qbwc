@@ -41,7 +41,7 @@ module QBWC
   #Quickbooks Type (either :qb or :qbpos)
   mattr_reader :quickbooks_type
   @@quickbooks_type = :qb
-  @@parser = Quickbooks::API[quickbooks_type]
+  @@parser = QuickbooksApi::API[quickbooks_type]
   
 class << self
 
@@ -58,7 +58,7 @@ class << self
   def quickbooks_type=(qb_type)
     raise "Quickbooks type must be :qb or :qbpos" unless [:qb, :qbpos].include?(qb_type)
     @@quickbooks_type = qb_type
-    @@parser = Quickbooks::API[qb_type]
+    @@parser = QuickbooksApi::API[qb_type]
   end
 
   # Default way to setup Quickbooks Web Connector (QBWC). Run rails generate qbwc:install
