@@ -4,18 +4,18 @@ class QbwcController < ApplicationController
   def qwc
     qwc = <<-QWC
     <QBWCXML>
-    <AppName>My App #{Rails.env}</AppName>
+    <AppName>#{QBWC.quickbooks_name} #{Rails.env}</AppName>
     <AppID></AppID>
     <AppURL>#{quickbooks_url(:protocol => 'https://', :action => 'api')}</AppURL>
-    <AppDescription>I like to describe my awesome app</AppDescription>
+    <AppDescription>#{QBWC.quickbooks_description}</AppDescription>
     <AppSupport>#{QBWC.quickbooks_support_site_url}</AppSupport>
-    <UserName>foo</UserName>
+    <UserName>#{QBWC.qbwc_username}</UserName>
     <OwnerID>#{QBWC.quickbooks_owner_id}</OwnerID>
-    <FileID>{90A44FB5-33D9-4815-AC85-BC87A7E7D1EB}</FileID>
+    <FileID>#{QBWC.quickbooks_file_id}</FileID>
     <QBType>QBFS</QBType>
     <Style>Document</Style>
     <Scheduler>
-      <RunEveryNMinutes>5</RunEveryNMinutes>
+      <RunEveryNMinutes>#{QBWC.run_every_minutes}</RunEveryNMinutes>
     </Scheduler>
     </QBWCXML>
     QWC

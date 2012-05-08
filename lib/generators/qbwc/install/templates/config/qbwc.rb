@@ -4,6 +4,11 @@ QBWC.setup do |config|
   config.qbwc_username = "foo"
   config.qbwc_password = "bar"
   
+  config.name = "Quickbooks Web Connector"
+  config.quickbooks_description = "Quickbooks Web Connector"
+  
+  config.run_every_minutes = 5
+  
   #Path to Company File (blank for open or named path or function etc..)
   config.quickbooks_company_file_path = ""
   
@@ -18,6 +23,7 @@ QBWC.setup do |config|
   
   #Quickbooks Owner ID provided in QWC File
   config.quickbooks_owner_id = '{57F3B9B1-86F1-4fcc-B1EE-566DE1813D20}'
+  config.quickbooks_file_id = '{90A44FB5-33D9-4815-AC85-BC87A7E7D1EB}'
 
   #Sync Code
   # This is where you feed requests into the queue.  

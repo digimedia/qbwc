@@ -8,6 +8,16 @@ module QBWC
   mattr_accessor :qbwc_password
   @@qbwc_password = "bar"
   
+  
+  mattr_accessor :quickbooks_name
+  @@quickbooks_name = "Quickbooks Web Connector"
+  mattr_accessor :quickbooks_description
+  @@quickbooks_description = "Quickbooks Web Connector"
+  
+  
+  mattr_accessor :run_every_minutes
+  @@run_every_minutes = 5
+  
   #Path to Company File 
   mattr_accessor :quickbooks_company_file_path 
   @@quickbooks_company_file_path = "" #blank for open or named path or function etc..
@@ -18,11 +28,13 @@ module QBWC
   
   #Quickbooks Support URL provided in QWC File
   mattr_accessor :quickbooks_support_site_url
-  @@quickbooks_support_site_url = "http://qb_support.lumber.com"
+  @@quickbooks_support_site_url = "http://localhost"
   
   #Quickbooks Owner ID provided in QWC File
   mattr_accessor :quickbooks_owner_id
   @@quickbooks_owner_id = '{57F3B9B1-86F1-4fcc-B1EE-566DE1813D20}'
+  mattr_accessor :quickbooks_file_id
+  @@quickbooks_file_id = '{90A44FB5-33D9-4815-AC85-BC87A7E7D1EB}'
   
   #Job definitions
   mattr_reader :jobs
