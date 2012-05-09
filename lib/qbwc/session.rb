@@ -118,7 +118,7 @@ private
 class << self
 
   def session
-    @@session || self.new
+    @@session ||= self.new
   end
 
   def new_or_unfinished
