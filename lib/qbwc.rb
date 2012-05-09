@@ -56,6 +56,7 @@ module QBWC
   mattr_reader :quickbooks_type
   mattr_reader :quickbooks_sync
   mattr_reader :quickbooks_sync_specific_records
+  mattr_reader :parser
   @@quickbooks_sync = nil
   @@quickbooks_sync_specific_records = nil
   @@quickbooks_type = :qb
