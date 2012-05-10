@@ -1,5 +1,5 @@
 require "qbwc/version"
-require "quickbooks"
+require "quickbooks_api"
 
 module QBWC
   #QBWC login credentials
@@ -54,24 +54,20 @@ module QBWC
 
   #Quickbooks Type (either :qb or :qbpos)
   mattr_reader :quickbooks_type
-  mattr_reader :quickbooks_sync
-  mattr_reader :quickbooks_sync_specific_records
   mattr_reader :parser
-  @@quickbooks_sync = nil
-  @@quickbooks_sync_specific_records = nil
   @@quickbooks_type = :qb
   @@parser = QuickbooksApi::API[quickbooks_type]
   
 class << self
 
   # One request, one response proc
-  def add_job(name, request, &block)
-    @@jobs[name] = Job.new(name, request, block)
+  def add_job(name, requests, response_proc)
+    @@jobs[name] = Job.new_static(name, requests, response_proc)
   end
 
   # Many requests, same response proc
-  def add_batch_job(name, requests, &proc)
-    @@jobs[name] = Job.new(name, requests, block)
+  def add_dynamic_job(name, request_generator, response_proc)
+    @@jobs[name] = Job.new_dynamic(name, request_generator, response_proc)
   end
 
   def quickbooks_type=(qb_type)
@@ -80,18 +76,9 @@ class << self
     @@parser = QuickbooksApi::API[qb_type]
   end
   
-  def quickbooks_sync=(quickbooks_sync)
-    @@quickbooks_sync = quickbooks_sync
-  end
-  
-  def quickbooks_sync_specific_records=(quickbooks_sync_specific_records)
-    @@quickbooks_sync_specific_records = quickbooks_sync_specific_records
-  end
-  
-
   # Default way to setup Quickbooks Web Connector (QBWC). Run rails generate qbwc:install
   # to create a fresh initializer with all configuration values.
-  def setup
+  def configure
     yield self
   end
 

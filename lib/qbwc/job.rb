@@ -1,19 +1,35 @@
 class QBWC::Job
   
-  attr_reader :name, :response_proc
+  include QBWC
+  
+  attr_reader :name, :request_proc, :response_proc
+  private_class_method :new
 
-  def initialize(name, requests, response_proc, opts = {})
+  def initialize(name, raw_requests = nil, request_proc = nil, response_proc = nil)
     @name = name
-    @requests = Array(requests)
+    @request_proc = request_proc
     @response_proc = response_proc
+    @raw_requests = Array(raw_requests)
   end
-
-  def requests
-    @requests.map { |r| Request.new(r, @response_proc) }
+  
+  def raw_requests
+    @raw_requests || (@request_proc && @request_proc.call)
   end
+  
+  def <<(raw_request)
+    @raw_requests << raw_request
+  end
+  
+  class << self
 
-  def <<(request)
-    @requests << request.is_a?(Request) ? request.raw_request : request
+    def new_static(name, requests, response_proc)
+      new(name, requests, nil, response_proc)
+    end
+
+    def new_dynamic(name, request_generator, response_proc)
+      new(name, nil, request_generator, response_proc)
+    end
+
   end
 
 end
