@@ -21,7 +21,11 @@ class QBWC::Session
   end
 
   def qbxml_request
-    QBWC.parser.hash_to_qbxml(request.raw_request)
+    if request.raw_request.is_a?(Hash)
+      QBWC.parser.hash_to_qbxml(request.raw_request)
+    else
+      request.raw_request
+    end
   end
 
   def response=(qbxml_response)
@@ -109,8 +113,8 @@ private
       puts "QBWC ERROR: #{status_code} - #{status_message}"
     else
       if iterator_remaining.to_i > 0
-        request_with_attributes = raw_request.detect { |k,v| k != 'xml_attributes' }.last
-        request_with_attributes['xml_attributes'] = {'iterator' => 'Continue', 'iteratorID' => iterator_id}
+        #request_with_attributes = raw_request.detect { |k,v| k != 'xml_attributes' }.last
+        #request_with_attributes['xml_attributes'] = {'iterator' => 'Continue', 'iteratorID' => iterator_id}
         self << Request.new(raw_request, response_proc)
       end
     end
