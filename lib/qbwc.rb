@@ -1,13 +1,14 @@
+$:.unshift File.dirname(File.expand_path(__FILE__))
 require "qbwc/version"
 require "quickbooks_api"
 
 module QBWC
-  #QBWC login credentials
-  mattr_accessor :qbwc_username
-  @@qbwc_username = "foo"
-  mattr_accessor :qbwc_password
-  @@qbwc_password = "bar"
-  
+
+  # Web connector login credentials
+  mattr_accessor :username
+  @@username = 'foo'
+  mattr_accessor :password
+  @@password = 'bar'
   
   mattr_accessor :quickbooks_name
   @@quickbooks_name = "Quickbooks Web Connector"
@@ -23,10 +24,13 @@ module QBWC
   #Path to Company File 
   mattr_accessor :quickbooks_company_file_path 
   @@quickbooks_company_file_path = "" #blank for open or named path or function etc..
+  # Full path to pompany file 
+  mattr_accessor :company_file_path 
+  @@company_file_path = ""
   
-  #Minimum Quickbooks Version Required for use in QBXML Requests
-  mattr_accessor :quickbooks_min_version
-  @@quickbooks_min_version = 3.0
+  # Minimum quickbooks version required for use in qbxml requests
+  mattr_accessor :min_version
+  @@min_version = 3.0
   
   #Quickbooks Support URL provided in QWC File
   mattr_accessor :quickbooks_support_site_url
@@ -38,46 +42,41 @@ module QBWC
   mattr_accessor :quickbooks_file_id
   @@quickbooks_file_id = '{90A44FB5-33D9-4815-AC85-BC87A7E7D1EB}'
   
-  #Job definitions
+  # Quickbooks support url provided in qwc file
+  mattr_accessor :support_site_url
+  @@support_site_url = 'http://qb_support.lumber.com'
+  
+  # Quickbooks owner id provided in qwc file
+  mattr_accessor :owner_id
+  @@owner_id = '{57F3B9B1-86F1-4fcc-B1EE-566DE1813D20}'
+  
+  # Job definitions
   mattr_reader :jobs
   @@jobs = {}
   
-  #Enable any or all of the defined jobs
-  mattr_accessor :enabled_jobs
-  @@enabled_jobs = []
-
   # Do processing after session termination
   # Enabling this option will speed up qbwc session time but will necessarily eat
-  # up more memory since every response must be stored until its processed. 
+  # up more memory since every response must be stored until it is processed. 
   mattr_accessor :delayed_processing
   @@delayed_processing = false
 
-  #Quickbooks Type (either :qb or :qbpos)
-  mattr_reader :quickbooks_type
-  mattr_reader :parser
-  @@quickbooks_type = :qb
-  @@parser = QuickbooksApi::API[quickbooks_type]
+  # Quickbooks Type (either :qb or :qbpos)
+  mattr_reader :api, :parser
+  @@api= ::QuickbooksApi::API[:qb]
   
 class << self
 
-  # One request, one response proc
-  def add_job(name, requests, response_proc)
-    @@jobs[name] = Job.new_static(name, requests, response_proc)
+  def add_job(name, &block)
+    @@jobs[name] = Job.new(name, &block)
   end
 
-  # Many requests, same response proc
-  def add_dynamic_job(name, request_generator, response_proc)
-    @@jobs[name] = Job.new_dynamic(name, request_generator, response_proc)
+  def api=(api)
+    raise 'Quickbooks type must be :qb or :qbpos' unless [:qb, :qbpos].include?(api)
+    @@api = api
+    @@parser = ::Quickbooks::API[api]
   end
 
-  def quickbooks_type=(qb_type)
-    raise "Quickbooks type must be :qb or :qbpos" unless [:qb, :qbpos].include?(qb_type)
-    @@quickbooks_type = qb_type
-    @@parser = QuickbooksApi::API[qb_type]
-  end
-  
-  # Default way to setup Quickbooks Web Connector (QBWC). Run rails generate qbwc:install
-  # to create a fresh initializer with all configuration values.
+  # Allow configuration overrides
   def configure
     yield self
   end
@@ -85,6 +84,8 @@ class << self
 end
   
 end
+
+require 'fiber'
 
 #Todo Move this to Autolaod
 require 'qbwc/soap_wrapper/default'

@@ -1,42 +1,18 @@
 PATH
   remote: .
   specs:
-    qbwc (0.0.1)
-      quickbooks_api (>= 0.1.6)
+    qbwc (0.0.2.005)
       rubyjedi-soap4r (>= 1.5.8.20100619003610)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.2.3)
-      i18n (~> 0.6)
-      multi_json (~> 1.0)
-    buffered_logger (0.1.3)
-      activesupport
-      i18n
-      term-ansicolor
-    coderay (1.0.6)
     httpclient (2.1.5.2)
-    i18n (0.6.0)
-    method_source (0.7.1)
-    multi_json (1.3.4)
-    nokogiri (1.5.2)
-    pry (0.9.9.4)
-      coderay (~> 1.0.5)
-      method_source (~> 0.7.1)
-      slop (>= 2.4.4, < 3)
-    quickbooks_api (0.1.6)
-      activesupport
-      buffered_logger (>= 0.1.3)
-      nokogiri
     rubyjedi-soap4r (1.5.8.20100619003610)
       httpclient (~> 2.1.5.2)
-    slop (2.4.4)
-    term-ansicolor (1.0.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  pry
   qbwc!

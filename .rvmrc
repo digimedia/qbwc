@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 rvm use 1.9.3@qbwc --create
+=======
+rvm use 1.9.3@qbwc --create
+>>>>>>> 1d6e2cdc676a66cd7e7ce48f601be19518424c27
